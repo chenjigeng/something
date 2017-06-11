@@ -4,10 +4,11 @@
   <body>
     <div id='app'>
       <input id='1' v-model='text'/>
-      {{ text }}
+      <span>{{ text }}</span>
+      asd {{ text }}
       <br />
       <input v-model='name' />
-      {{ name }}
+      asd {{ name }}
     </div>
     <script>
       new Vue({
@@ -61,14 +62,14 @@
         var flag = document.createDocumentFragment()
         var child
         while (child = node.firstChild) {
-          complie(child, vm)
+          compile(child, vm)
           flag.appendChild(child)
         }
         node.appendChild(flag)
       }
 
       //编译模板
-      function complie(node, vm) {
+      function compile(node, vm) {
         var reg = /\{\{(.*)\}\}/;
         //nodetype为1，指的是元素
         if (node.nodeType === 1) {
@@ -82,7 +83,12 @@
               })
               node.value = vm[attrValue]
             }
-          }   
+          }
+          console.log(this)
+          for (var i = 0; i < node.childNodes.length; i++) {
+            console.log(this)
+            this.compile(node.childNodes[i], vm)
+          }  
         }
         //文本节点
         if (node.nodeType === 3) {
@@ -100,11 +106,15 @@
         this.vm = vm
         this.key = key
         this.node = node
-        node.nodeValue = this.vm[this.key]
+        this.initValue = node.nodeValue
+        this.reg = new RegExp('{{\\\s+' + key + '\\\s+}}')
+        console.log(key)
+        console.log(node.nodeValue)
+        node.nodeValue = this.initValue.replace(this.reg, this.vm[this.key])
       }
       
       Sub.prototype.update = function() {
-        this.node.nodeValue = this.vm[this.key]
+        this.node.nodeValue = this.initValue.replace(/\{\{key\}\}/, this.vm[this.key])
       }
 
       //发布者
