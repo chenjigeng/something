@@ -1,0 +1,137 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <div id='app'>
+      <input id='1' v-model='text'/>
+      {{ text }}
+      <br />
+      <input v-model='name' />
+      {{ name }}
+    </div>
+    <script>
+      new Vue({
+        el: 'app',
+        data: {
+          text: '123',
+          name: 'cjg'
+        }
+      })
+
+      //每new一个vue，其实就是做两个操作： 1.监听数据 2.编译HTML
+      function Vue(options) {
+        this.options = options;
+        this.data = options.data
+        this.el = options.el
+        this.watchs = {}
+        //监听数据
+        observe(this, this.data)
+        //编译HTML
+        nodeToFragement(this.el, this)
+      }
+
+      // 注册拦截器
+      function defineProperty(vm, key, value) {
+        Object.defineProperty(vm, key, {
+          get: function() {
+            return value
+          },
+          set: function(newValue) {
+            if (newValue === value) {
+              return
+            }
+            value = newValue
+            if (vm.watchs[key]) {
+              vm.watchs[key].notify()
+            }
+          }
+        })
+      }
+
+      //监听数据，为每一个data的属性注册get和set，从而拦截变化
+      function observe(vm, data) {
+        Object.keys(data).map(function(key) {
+          defineProperty(vm, key, data[key])
+        })
+      }
+
+      //将用户的模板转为documentfragment，并且在转化过程中做编译模板
+      function nodeToFragement(id, vm) {
+        var node = document.getElementById(id)
+        var flag = document.createDocumentFragment()
+        var child
+        while (child = node.firstChild) {
+          complie(child, vm)
+          flag.appendChild(child)
+        }
+        node.appendChild(flag)
+      }
+
+      //编译模板
+      function complie(node, vm) {
+        var reg = /\{\{(.*)\}\}/;
+        //nodetype为1，指的是元素
+        if (node.nodeType === 1) {
+          var attrs = node.attributes;
+          for (var i = 0; i < attrs.length; i++) {
+            var attrName = attrs[i].name
+            if (attrName === 'v-model') {
+              var attrValue = attrs[i].value
+              node.addEventListener('input', function(event) {
+                vm[attrValue] = event.target.value
+              })
+              node.value = vm[attrValue]
+            }
+          }   
+        }
+        //文本节点
+        if (node.nodeType === 3) {
+          var value = node.nodeValue
+          if (reg.test(value)) {
+            var name = RegExp.$1
+            name = name.trim()
+            watch(vm, name, node)
+          }
+        }
+      }
+
+       //订阅者
+      function Sub(vm, key, node) {
+        this.vm = vm
+        this.key = key
+        this.node = node
+        node.nodeValue = this.vm[this.key]
+      }
+      
+      Sub.prototype.update = function() {
+        this.node.nodeValue = this.vm[this.key]
+      }
+
+      //发布者
+      function Pub() {
+        this.subs = []
+        if (!Pub.prototype.addSub) {
+          Pub.prototype.addSub = function(sub) {
+            this.subs.push(sub)
+          }
+          Pub.prototype.notify = function() {
+            this.subs.map(function (item) {
+              item.update()
+            })
+          }
+        }
+      }
+
+      //注册监听函数
+      function watch(vm, key, node) {
+        if (!vm.watchs[key]) {
+          vm.watchs[key] = new Pub()
+          var b = new Pub()
+        }
+        var newSub = new Sub(vm, key, node)
+        vm.watchs[key].addSub(newSub)
+      }
+    </script>    
+  </body>
+</html>
+
