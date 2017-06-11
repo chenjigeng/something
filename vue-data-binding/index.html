@@ -4,7 +4,7 @@
   <body>
     <div id='app'>
       <input id='1' v-model='text'/>
-      <span>{{ text }}</span>
+      <span>asdas {{ text }} asd asd </span>
       asd {{ text }}
       <br />
       <input v-model='name' />
@@ -84,9 +84,7 @@
               node.value = vm[attrValue]
             }
           }
-          console.log(this)
           for (var i = 0; i < node.childNodes.length; i++) {
-            console.log(this)
             this.compile(node.childNodes[i], vm)
           }  
         }
@@ -114,7 +112,7 @@
       }
       
       Sub.prototype.update = function() {
-        this.node.nodeValue = this.initValue.replace(/\{\{key\}\}/, this.vm[this.key])
+        this.node.nodeValue = this.initValue.replace(this.reg, this.vm[this.key])
       }
 
       //发布者
