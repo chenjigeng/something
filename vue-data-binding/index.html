@@ -12,7 +12,7 @@
     </div>
     <script>
       new Vue({
-        el: 'app',
+        el: '#app',
         data: {
           text: '123',
           name: 'cjg'
@@ -57,8 +57,8 @@
       }
 
       //将用户的模板转为documentfragment，并且在转化过程中做编译模板
-      function nodeToFragement(id, vm) {
-        var node = document.getElementById(id)
+      function nodeToFragement(selector, vm) {
+        var node = document.querySelector(selector)
         var flag = document.createDocumentFragment()
         var child
         while (child = node.firstChild) {

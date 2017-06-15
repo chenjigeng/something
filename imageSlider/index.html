@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      #banner {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        margin: auto;
+        overflow: hidden;
+      }
+      #image-slider {
+        position: relative;
+        width: 1600px;
+        height: 400px;
+        padding: 0;
+        margin: 0;
+        transition: left 0.3s ease;
+        transition: transform 0.3s ease;
+      }
+      li {
+        list-style: none;
+        float: left
+      }
+      img {
+        transition: opacity 1s ease;
+        width: 400px;
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id='banner'>
+      <ul id='image-slider'>
+        <li>
+          <img src='./1.jpeg' />
+        </li>
+        <li>
+          <img src='./2.jpg' />
+        </li>
+        <li>
+          <img src='./3.jpg' />
+        </li>
+        <li>
+          <img src='./1.jpeg' />
+        </li>
+      </ul>
+    </div> 
+    <script>
+      var imageSlider = document.getElementById('image-slider')
+      init(imageSlider, 4, 2000)
+      function init(imageSlider, imageNum, delayTime) {
+        let index = 0;
+        setInterval(function() {
+          index = index >= imageNum - 1 ? 1 : index + 1;
+          turnLeft(imageSlider, imageNum, index, delayTime)      
+        }, delayTime)
+      }
+      function turnLeft(imageSlider, imageNum, index, delayTime) {
+        console.log(index)
+        console.log(imageNum)
+        let pix = index * -400;
+        console.log(pix)
+        imageSlider.style.transform = 'translate3d(' + pix + 'px, 0, 0)'
+      }
+    </script>
+  </body>
+</html>
+

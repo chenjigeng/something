@@ -6,3 +6,5 @@
 <input v-model='text' />
 <span>{{text}}</span>
 ```
+
+## 增加了图片轮播代码

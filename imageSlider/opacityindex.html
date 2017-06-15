@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      #image-slider {
+        position: relative
+      }
+      li {
+        list-style: none;
+        position: absolute
+      }
+      img {
+        transition: opacity 1s ease;
+        width: 400px;
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id='image-slider'>
+      <li>
+        <img src='./1.jpeg' />
+      </li>
+      <li>
+        <img src='./2.jpg' />
+      </li>
+      <li>
+        <img src='./3.jpg' />
+      </li>
+    </ul>
+    <script>
+      var imageNodes = document.querySelectorAll('#image-slider img')
+      init(imageNodes)
+      function init(imageNodes) {
+        for (var i = 1; i < imageNodes.length; i++) {
+          imageNodes[i].style.opacity = 0;
+        }
+        var index = 0;
+        transformOpacity(imageNodes, index, 2000)
+      }
+      function transformOpacity(imageNodes, index, time) {
+        var nextIndex = index >= imageNodes.length - 1 ? 0 : index + 1;
+        console.log(index)
+        console.log(imageNodes)
+        imageNodes[index].style.opacity = 0;
+        imageNodes[nextIndex].style.opacity = 1;
+        setTimeout(function() {
+          transformOpacity(imageNodes, nextIndex, time)
+        }, time)
+      }
+    </script>
+  </body>
+</html>
+
