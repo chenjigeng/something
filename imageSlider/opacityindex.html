@@ -39,17 +39,15 @@
           imageNodes[i].style.opacity = 0;
         }
         var index = 0;
-        transformOpacity(imageNodes, index, 2000)
+        setInterval(function() {
+          transformOpacity(imageNodes, index);
+          index = index >= imageNodes.length - 1 ? 0 : index + 1;
+        }, 2000)
       }
-      function transformOpacity(imageNodes, index, time) {
+      function transformOpacity(imageNodes, index) {
         var nextIndex = index >= imageNodes.length - 1 ? 0 : index + 1;
-        console.log(index)
-        console.log(imageNodes)
         imageNodes[index].style.opacity = 0;
         imageNodes[nextIndex].style.opacity = 1;
-        setTimeout(function() {
-          transformOpacity(imageNodes, nextIndex, time)
-        }, time)
       }
     </script>
   </body>
