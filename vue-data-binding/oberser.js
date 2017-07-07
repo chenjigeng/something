@@ -75,6 +75,7 @@ function Watcher(vm, exporfun, cb) {
   this.get()
   this.cb = cb
 }
+
 Watcher.prototype = {
   update: function() {
     var oldValue = this.value
@@ -143,6 +144,7 @@ function MVVM(options) {
 }
 
 MVVM.prototype = {
+  // 将this.$data里面的数据移到this上，即可以通过this.a来访问this.$data.a的数据
   initData: function() {
     var me = this
     Object.keys(this.$data).forEach(function(key) {
@@ -158,15 +160,23 @@ MVVM.prototype = {
       })
     })
   },
+  //初始化并且编译节点
   init: function() {
     this.$el = this.isElementNode(this.options.el) ? this.options.el : document.querySelector(this.options.el)
+    var fragment = this.node2Fragment()
+    this.compile(fragment)
+    this.$el.appendChild(fragment)
+  },
+  // 将节点转为fragment,通过fragment来操作DOM，可以获得更高的效率
+  // 因为如果直接操作DOM节点的话，每次修改DOM都会导致DOM的回流或重绘，而将其放在fragment里，修改fragment不会导致DOM回流和重绘
+  // 当在fragment一次性修改完后，在直接放回到DOM节点中
+  node2Fragment() {
     var fragment = document.createDocumentFragment()
     var firstChild
     while(firstChild = this.$el.firstChild) {
       fragment.appendChild(firstChild)
     }
-    this.compile(fragment)
-    this.$el.appendChild(fragment)
+    return fragment
   },
   compile: function(node) {
     var me = this

@@ -13,13 +13,18 @@
         <span v-bind:title='test'>123123</span>
         asd {{ test }} 
       </span>
+      <input v-model='child.test' />
+      {{ child.test }}
     </div>
     <script src='./oberser.js'></script>
     <script>
       var vm = new MVVM({
         el: '#app',
         data: {
-          test: 'asdasd'
+          test: 'asdasd',
+          child: {
+            test: 'xcvxcv'
+          }
         }
       })
     </script>
