@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>drag</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link href="css/style.css" rel="stylesheet">-->
+    <style>
+      .dotted {
+        border: 1px dotted black;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      let target = ''
+      let targetOffsetTop = 0
+      function handleDragStart(ev) {
+        target = ev.target
+        targetOffsetTop = ev.target.offsetTop
+        ev.dataTransfer.effectAllowed = 'move'
+      }
+
+      function handleDragOver(ev) {
+        ev.preventDefault();
+        ev.target.classList.add('dotted')
+      }
+
+      function handleDragLeave(ev) {
+        ev.preventDefault()
+        ev.target.classList.remove('dotted')
+      }
+
+      function handleDrag(ev) {
+        let resultOffsetTop = ev.target.offsetTop
+        console.log(ev.target.offsetTop)
+        console.log(target)
+        ev.preventDefault()
+        if (targetOffsetTop < resultOffsetTop) {
+          insertAfter(target, ev.target)
+        }
+        else {
+          insertBefore(target, ev.target)
+        }
+        ev.target.classList.remove('dotted')
+      }
+
+      function insertBefore(insertNode, node) {
+        node.parentNode.insertBefore(insertNode, node)
+      }
+
+      function insertAfter(insertNode, node) {
+        if (node.nextElementSibling) {
+          insertBefore(insertNode, node.nextElementSibling)
+        } else {
+          node.parentNode.appendChild(insertNode)
+        }
+      }
+
+      function handleDragEnd(ev) {
+        target = null
+      }
+    </script>
+    <div draggable="true" ondragstart="handleDragStart(event)" ondragleave="handleDragLeave(event)" ondrop='handleDrag(event)' ondragover="handleDragOver(event)" ondragend='handleDragEnd(event)'>a</div>
+    <div draggable="true" ondragstart="handleDragStart(event)" ondragleave="handleDragLeave(event)" ondrop='handleDrag(event)' ondragover="handleDragOver(event)">b</div>
+    <div draggable="true" ondragstart="handleDragStart(event)" ondragleave="handleDragLeave(event)" ondrop='handleDrag(event)' ondragover="handleDragOver(event)">c</div>    
+  </body>
+</html>

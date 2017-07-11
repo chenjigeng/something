@@ -39,4 +39,9 @@ function findElements(node, classname) {
 
 
 // 非递归
+function getElementById(node, id) {
+  
+}
 
+
+// querySelector他的原理是，将selector表达式划分为一个个selector,然后从最后一个selector开始匹配，并从右往左查找匹配
