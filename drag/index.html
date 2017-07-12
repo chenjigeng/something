@@ -7,7 +7,11 @@
     <!--<link href="css/style.css" rel="stylesheet">-->
     <style>
       .dotted {
-        border: 1px dotted black;
+        border: 4px dotted red;
+      }
+      img {
+        width: 100px;
+        height: 100px;
       }
     </style>
   </head>
@@ -16,7 +20,7 @@
       let target = ''
       let targetOffsetTop = 0
       function handleDragStart(ev) {
-        target = ev.target
+        target = findTarget(ev.target)
         targetOffsetTop = ev.target.offsetTop
         ev.dataTransfer.effectAllowed = 'move'
       }
@@ -37,10 +41,10 @@
         console.log(target)
         ev.preventDefault()
         if (targetOffsetTop < resultOffsetTop) {
-          insertAfter(target, ev.target)
+          insertAfter(target, findTarget(ev.target))
         }
         else {
-          insertBefore(target, ev.target)
+          insertBefore(target, findTarget(ev.target))
         }
         ev.target.classList.remove('dotted')
       }
@@ -60,9 +64,28 @@
       function handleDragEnd(ev) {
         target = null
       }
+
+      function findTarget(node) {
+        if (!node || node == document) {
+          return null
+        }
+        if (node.classList.contains('target')) {
+          return node;
+        }
+        return findTarget(node.parentNode)
+      }
     </script>
-    <div draggable="true" ondragstart="handleDragStart(event)" ondragleave="handleDragLeave(event)" ondrop='handleDrag(event)' ondragover="handleDragOver(event)" ondragend='handleDragEnd(event)'>a</div>
-    <div draggable="true" ondragstart="handleDragStart(event)" ondragleave="handleDragLeave(event)" ondrop='handleDrag(event)' ondragover="handleDragOver(event)">b</div>
-    <div draggable="true" ondragstart="handleDragStart(event)" ondragleave="handleDragLeave(event)" ondrop='handleDrag(event)' ondragover="handleDragOver(event)">c</div>    
+    <div class='target' draggable="true" ondragstart="handleDragStart(event)" ondragleave="handleDragLeave(event)" ondrop='handleDrag(event)' ondragover="handleDragOver(event)" ondragend='handleDragEnd(event)'>
+      <img src="./imgs/1.jpeg" alt="1">
+    </div>
+    <div class='target' draggable="true" ondragstart="handleDragStart(event)" ondragleave="handleDragLeave(event)" ondrop='handleDrag(event)' ondragover="handleDragOver(event)">
+      <img src='./imgs/2.jpg' />
+    </div>
+    <div class='target' draggable="true" ondragstart="handleDragStart(event)" ondragleave="handleDragLeave(event)" ondrop='handleDrag(event)' ondragover="handleDragOver(event)">
+      <img src="./imgs/3.jpg" alt="ss">
+    </div>    
+    <div class='target' draggable="true" ondragstart="handleDragStart(event)" ondragleave="handleDragLeave(event)" ondrop='handleDrag(event)' ondragover="handleDragOver(event)">
+      <img src="./imgs/4.jpg" alt="ss">
+    </div>   
   </body>
 </html>
