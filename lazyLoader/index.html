@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="./jquery.js"></script>
+  </head>
+  <body>
+    <img src='./blank.jpg' data-src='./1.jpg' class='lazy'/>
+    <img src='./blank.jpg' data-src='./2.jpg' class='lazy'/>
+    <img src='./blank.jpg' data-src='./3.jpg' class='lazy'/>
+    <script src='./jquery.js'></script>
+    <script src='./lazyLoader.js'></script>
+    <script>
+      lazyLoader.init({
+        threshold: 0
+      });
+    </script>
+  </body>
+</html>
