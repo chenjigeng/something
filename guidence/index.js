@@ -7,7 +7,7 @@ class Guidences {
   showGuidences(eleList = []) {
     this.eleList = eleList instanceof Array ? eleList : [eleList];
     this.modal || this.createModel();
-    this.showGuidence(eleList);
+    this.showGuidence();
   }
   // 展示引导页面
   showGuidence() {
