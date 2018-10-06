@@ -1,16 +1,15 @@
 class Guidences {
-  
   constructor() {
     this.modal = null;
     this.eleList = [];
   }
-
+  // 允许传入单个元素
   showGuidences(eleList = []) {
     this.eleList = eleList instanceof Array ? eleList : [eleList];
     this.modal || this.createModel();
     this.showGuidence(eleList);
   }
-
+  // 展示引导页面
   showGuidence() {
     if (!this.eleList.length) {
       return this.hideModal();
@@ -27,9 +26,9 @@ class Guidences {
     const modalContainer = document.createElement('div');
     const modalMask = document.createElement('div');
     this.setMaskStyle(modalMask);
-    modalContainer.appendChild(modalMask);
     modalContainer.style.display = 'none';
     this.modal = modalContainer;
+    modalContainer.appendChild(modalMask);
     document.body.appendChild(this.modal);
   }
 
@@ -57,19 +56,17 @@ class Guidences {
       this.showGuidence(this.eleList);
     });
   }
-  // 若引导的元素不在页面范围内，则滚动到引导元素的视野范围内。
+  // 若引导的元素不在页面范围内，则滚动页面到引导元素的视野范围内
   adapteView(ele) {
     const rect = ele.getBoundingClientRect();
     const height = window.innerHeight;
     if (rect.top < 0) {
       window.scrollBy(0, rect.top);
-      return true;
     } else if (rect.top > height - rect.height) {
-      window.scrollBy(0, rect.top + rect.height - height);
-      return true;
+      window.scrollBy(0, rect.top + rect.height - height + 30);
     }
-    return false;
   }
+
   hideModal() {
     this.modal.style.display = 'none';
     this.modal.removeChild(this.modalBody);

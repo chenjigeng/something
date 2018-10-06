@@ -22,3 +22,11 @@ div.demo {
 .demo5 {
   background: pink;
 }
+
+button {
+  position: fixed;
+  right: 40px;
+  top: 40px;
+  background: #8f8f8f;
+  color: white;
+}
