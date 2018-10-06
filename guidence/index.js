@@ -60,10 +60,8 @@ class Guidences {
   adapteView(ele) {
     const rect = ele.getBoundingClientRect();
     const height = window.innerHeight;
-    if (rect.top < 0) {
+    if (rect.top < 0 || rect.top + rect.height > height) {
       window.scrollBy(0, rect.top);
-    } else if (rect.top > height - rect.height) {
-      window.scrollBy(0, rect.top + rect.height - height + 30);
     }
   }
 
