@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+   dl {
+  border: 1px solid #000;
+  position: relative;
+}
+dd {
+  position: absolute;
+  right: 0;
+  margin: -1.2em 0 0 0;
+}
+dd:empty::before {
+  content: '-';
+  color: black;
+}
+  </style>
+</head>
+<body>
+    <dl>
+        <dt>手机系统</dt>
+        <dd>Android</dd>
+        <dt>登录方式</dt>
+        <dd>手机微信</dd>
+        <dt>测试</dt>
+        <dd>嘿嘿</dd>
+        <dt>测试</dt>
+        <dd></dd>
+      </dl>
+</body>
+</html>

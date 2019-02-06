@@ -21,25 +21,36 @@
       background: black;
       color: white;
       position: absolute;
-      top: -12px;
-      padding: 5px;
+      /* top: 0; */
+      bottom: 100%;
+      padding: 8px;
       font-size: 12px;
       left: 50%;
       border-radius: 5px;
-      transform: translate(-50%, -100%);
+      transform: translate(-50%, -20px);
       white-space: nowrap;
     }
     .css-tips::after {
       display: block;
       visibility: hidden;
       position: absolute;
-      transform: translateY(-12px) translateX(-50%);
+      /* transform: translateY(-12px) translateX(-50%); */
+      transform: translate(-50%, -20px);
       left: 50%;
       content: '';
       border: 7px solid transparent;
       border-top-color: black;
-      top: 0;
+      /* top: 0; */
+      bottom: 100%;
+
     }
+/* 
+    .css-tips.right::before {
+      left: 100%;
+      transform: (50%, -50%);
+      top: 50%;
+      
+    } */
 
     .css-tips:hover::after, .css-tips:hover::before {
       visibility: visible;
@@ -47,7 +58,7 @@
   </style>
 </head>
 <body>
-  <a href="javascript:" class="icon-delete css-tips" data-title="删除" role="button">删除</a>
+  <a href="javascript:" class="icon-delete css-tips right" data-title="删除" role="button">删除</a>
 </body>
 </html>
 
